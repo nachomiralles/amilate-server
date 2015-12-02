@@ -5,7 +5,6 @@
 var User = require('./user');
 
 class Group {
-
     constructor(name, creationDate, description) {
         this._id = name + creationDate; // TODO Change when including MongoDB
         this.name = name;

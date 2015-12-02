@@ -1,11 +1,13 @@
-/**
- * Created by NachoGeotec on 15/10/2015.
- */
+
 var express = require('express');
 var app = express();
 var UserController = require('./src/main/controllers/user-controller');
 var GroupController = require('./src/main/controllers/group-controller');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+const logger = require('morgan');
+app.use(logger('dev'));
+
+
 
 //USING BODY PARSER TO BE ABLE TO CACTH req.body.whatever
 app.use( bodyParser.json() );
@@ -15,6 +17,7 @@ app.use(bodyParser.urlencoded({
 
 //ROUTES TODO BRING THIS TO ROUTER
 app.get('/user', UserController.getUsers);
+app.get('/user/count', UserController.countUser);
 app.get('/user/:id', UserController.getUser);
 app.post('/user', UserController.addOrUpdateUser);
 
