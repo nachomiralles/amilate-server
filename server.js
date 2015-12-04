@@ -1,8 +1,6 @@
 
 var express = require('express');
 var app = express();
-var UserController = require('./src/main/controllers/user-controller');
-var GroupController = require('./src/main/controllers/group-controller');
 var bodyParser = require('body-parser');
 const logger = require('morgan');
 app.use(logger('dev'));
@@ -16,14 +14,17 @@ app.use(bodyParser.urlencoded({
 }));
 
 //ROUTES TODO BRING THIS TO ROUTER
-app.get('/user', UserController.getUsers);
-app.get('/user/count', UserController.countUser);
-app.get('/user/:id', UserController.getUser);
-app.post('/user', UserController.addOrUpdateUser);
+//app.get('/user', UserController.getUsers);
+//app.get('/user/count', UserController.countUser);
+//app.get('/user/:id', UserController.getUser);
+//app.post('/user', UserController.addOrUpdateUser);
 
-app.get('/group', GroupController.getGroups);
-app.get('/group/:id', GroupController.getGroup);
-app.post('/group', GroupController.addOrUpdateGroup);
+var root = require('./src/main/controllers/routes/main-router')();
+app.use('/', root);
+
+//app.get('/group', GroupController.getGroups);
+//app.get('/group/:id', GroupController.getGroup);
+//app.post('/group', GroupController.addOrUpdateGroup);
 
 var server = null;
 
