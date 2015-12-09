@@ -1,7 +1,7 @@
 "use strict";
 var express = require('express');
 var router = express.Router();
-var SessionManager = require('../../utils/session-manager');
+var SessionManager = require('../utils/session-manager');
 
 
 module.exports = function(){

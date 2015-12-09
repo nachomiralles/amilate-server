@@ -17,10 +17,11 @@ const sesionManager = {
     },
 
     createSession: function(req){
+
         const SECONDS = 60;
         req.session.user = {
-            username: user,
-            vaffanculo: Date.now() + 1000 * SECONDS
+            username: req.body.username,
+            expirationDate: Date.now() + 1000 * SECONDS
         };
     },
 

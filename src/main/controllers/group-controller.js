@@ -97,6 +97,11 @@ module.exports = {
             .catch((error) => {
                 res.jsonp({"error": error.message})
             });
+    },
+
+    //TODO
+    getGroupsByUser: function getGroupsByUser(req, res){
+
     }
 
 };

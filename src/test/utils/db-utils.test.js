@@ -5,9 +5,9 @@
 
 var chai = require("chai");
 var expect = chai.expect;
-var mongoose = require('mongoose');
+//var mongoose = require('mongoose');
 var DBUtils = require('../../main/utils/db-utils');
-var User = mongoose.model('User', { name: String });
+//var User = mongoose.model('User', { name: String });
 describe("Testing Mongo Connection", function(){
     before(function(){
        DBUtils.connect();

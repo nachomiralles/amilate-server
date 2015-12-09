@@ -1,25 +1,22 @@
 "use strict";
 var express = require('express');
 var router = express.Router();
-var UsersController = require('../../controllers/user-controller');
+var UsersController = require('../controllers/user-controller');
 
 module.exports = function(){
 
-    router.get('/', function(req, res){
-        UsersController.getAllUsers(req, res);
-    });
+    router.get('/',  UsersController.getAllUsers);
 
-    router.get('/user/:username', function(req, res){
-        UsersController.getUser(req, res);
-    });
+    router.get('/user/:username',  UsersController.getUser);
 
-    router.put('/user', function(req, res){
-        UsersController.updateUser(req, res);
-    });
+    router.put('/user',  UsersController.updateUser);
 
-    router.post('/user', function(req, res){
-       UsersController.createUser(req, res);
-    });
+    router.post('/user',  UsersController.createUser);
+
+    router.get('/group/:groupname', UsersController.getUsersByGroup);
+
+    router.post('/user/password', UsersController.updatePassword);
+
 
     return router;
 
