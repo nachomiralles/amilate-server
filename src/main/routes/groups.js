@@ -5,9 +5,7 @@ var GroupsController = require('../../controllers/group-controller')
 
 module.exports = function(){
 
-    router.get('/', function(req, res){
-        GroupsController.getAllGroups(req, res);
-    });
+    router.get('/', GroupsController.getAllGroups);
 
     router.get('/group/:groupname', function(req, res){
         GroupsController.getGroup(req, res);
