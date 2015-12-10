@@ -42,7 +42,7 @@ module.exports = {
             });
     },
 
-    loginUser: function loginUser(req, res) {
+    loginUser: function loginUser(req, res, next) {
         const username = req.body.username;
         const password = Crypter(req.body.password);
 
@@ -59,11 +59,11 @@ module.exports = {
                     res.jsonp({'success': username + ' logged!'});
                 }
                 else{
-                    res.jsonp({'error': 'Login incorrect.'});
+                    next(new Error('login-error'));
                 }
             })
             .catch((error) => {
-                res.jsonp({'error': 'Problem in DB'});
+                next(new Error('db-error'));
             });
     },
 
@@ -108,7 +108,7 @@ module.exports = {
         pgUtils.executeQuery({statement: query})
             .then((result) => {
                 res.jsonp({'success': 'User ' + user.username + ' updated.'});
-                res.jsonp(result);
+                //res.jsonp(result);
             })
             .catch((error) => {
                 res.jsonp({"error": error})
@@ -116,27 +116,64 @@ module.exports = {
 
     },
 
-    //TODO
-    getUsersByGroup: function getusersByGroup(req, res) {
+    deleteUser: function deleteUser(req, res) {
 
+        const user = req.body;
+
+        const query = {
+            name: 'delete-user',
+            text: 'DELETE FROM users WHERE username LIKE $1',
+            values: [user.username]
+        };
+
+        pgUtils.executeQuery({statement: query})
+            .then((result) => {
+                res.jsonp({'success': 'User ' + user.username + ' deleted.'});
+               // res.jsonp(result);
+            })
+            .catch((error) => {
+                res.jsonp({"error": error})
+            });
 
     },
 
-    //TODO
+    getUsersByGroup: function getusersByGroup(req, res) {
+        const groupname = req.params.groupname;
+
+        const query = {
+            name: 'get-users-of-a-group',
+            text: 'SELECT username, email FROM users WHERE id_user IN (SELECT id_user FROM user_groups WHERE id_group = (SELECT id_group FROM groups WHERE groupname LIKE $1))',
+            values: [groupname]
+        };
+
+        pgUtils.executeQuery({statement: query})
+            .then((result) => {
+                if(result.length>0)
+                    res.jsonp(result);
+                else
+                    res.jsonp({"error": "Cannot find users in this group."})
+                //res.jsonp(result);
+            })
+            .catch((error) => {
+                res.jsonp({"error": error})
+            });
+
+    },
+
     updatePassword: function updatePassword(req, res){
         const username = req.body.username;
         const password = Crypter(req.body.password);
 
         const query = {
-            name: 'update-user',
+            name: 'update-password',
             text: 'UPDATE users SET password = $2 WHERE username LIKE $1',
             values: [username, password]
         };
 
         pgUtils.executeQuery({statement: query})
             .then((result) => {
-                res.jsonp({'success': 'User ' + user.username + ' updated.'});
-                res.jsonp(result);
+                res.jsonp({'success': 'Password updated.'});
+                //res.jsonp(result);
             })
             .catch((error) => {
                 res.jsonp({"error": error})

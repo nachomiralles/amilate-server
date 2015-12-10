@@ -13,6 +13,8 @@ module.exports = function(){
 
     router.post('/user',  UsersController.createUser);
 
+    router.delete('/user',  UsersController.deleteUser);
+
     router.get('/group/:groupname', UsersController.getUsersByGroup);
 
     router.post('/user/password', UsersController.updatePassword);

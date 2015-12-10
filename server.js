@@ -25,6 +25,28 @@ app.use(bodyParser.urlencoded({
 var root = require('./src/main/routes/main-router')();
 app.use('/', root);
 
+//TODO move this to a external file and create or refactor all error codes.
+var ERRORS = {
+    'login-error': {
+        text: 'Sorry, try again'
+    },
+    'db-error': {
+        text: 'Sorry an error occurred in the database'
+    }
+}
+
+app.use(function(err, req, res, next) {
+
+    console.error(err.message);
+
+    var returnMessage = 'Sorry an error occurred, we are working to fix it';
+
+    if( ERRORS[err.message] )
+        returnMessage = ERRORS[err.message].text;
+
+    res.status(500).jsonp({error: returnMessage});
+});
+
 var server = null;
 
 var start = function start(port, callback) {

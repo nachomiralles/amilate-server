@@ -9,29 +9,15 @@ module.exports = function(){
 
     router.get('/group/:groupname', GroupsController.getGroup);
 
+    router.post('/group', GroupsController.createGroup);
+
     router.put('/group', GroupsController.updateGroup);
 
-    router.post('/group', GroupsController.createGroup);
+    router.delete('/group', GroupsController.deleteGroup);
 
     router.get('/user/:username', GroupsController.getGroupsByUser);
 
     router.post('/new-user', GroupsController.addUserToGroup);
-    //
-    //router.get('/group/:groupname', function(req, res){
-    //    GroupsController.getGroup(req, res);
-    //});
-    //
-    //router.put('/group', function(req, res){
-    //    GroupsController.updateGroup(req, res);
-    //});
-    //
-    //router.post('/group', function(req, res){
-    //    GroupsController.createGroup(req, res);
-    //});
-    //
-    //router.post('/new-user', function(req, res){
-    //    GroupsController.addUserToGroup(req, res);
-    //});
 
     return router;
 

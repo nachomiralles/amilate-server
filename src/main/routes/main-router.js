@@ -17,6 +17,7 @@ module.exports = function(){
     router.use("/register", register);
 
     router.use(function(req, res, next){
+
         if(SessionManager.hasSession(req)){
             next();
         }
